@@ -117,10 +117,18 @@ function RecommendedProducts({products}) {
                         aspectRatio="1/1"
                         sizes="(min-width: 45em) 20vw, 50vw"
                       />
-                      <h4>{product.title}</h4>
-                      <small>
-                        <Money data={product.priceRange.minVariantPrice} />
-                      </small>
+                      <h4 className="vendor">{product.vendor}</h4>
+                      <h4 className="product-title">{product.title}</h4>
+                      <div className="product-price">
+                        {product.compareAtPriceRange.minVariantPrice.amount !== product.compareAtPriceRange.maxVariantPrice.amount ? (
+                          <>
+                            <s><Money data={product.compareAtPriceRange.maxVariantPrice} /></s>{' '}
+                            <Money className="product-price-on-sale" data={product.priceRange.minVariantPrice} />
+                          </>
+                        ) : (
+                          <Money data={product.priceRange.minVariantPrice} />
+                        )}
+                      </div>
                     </Link>
                   ))
                 : null}
@@ -160,7 +168,26 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   fragment RecommendedProduct on Product {
     id
     title
+    vendor
     handle
+    variants(first: 6) {
+      nodes {
+        selectedOptions {
+          name
+          value
+        }
+      }
+    }
+    compareAtPriceRange {
+      maxVariantPrice {
+        amount
+        currencyCode
+      }
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
     priceRange {
       minVariantPrice {
         amount

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 :root {
   --aside-width: 400px;
   --cart-aside-summary-height-with-discount: 300px;
@@ -362,8 +364,15 @@ button.reset:hover:not(:has(> *)) {
   }
 }
 
+/* .recommended-product {
+  border: 1px solid #E8E8E8;
+  border-radius: 10px
+} */
+
 .recommended-product img {
   height: auto;
+  border: 1px solid #E8E8E8;
+  border-radius: 10px
 }
 
 /*
@@ -507,4 +516,53 @@ button.reset:hover:not(:has(> *)) {
 
 .account-logout {
   display: inline-block;
+}
+
+
+/*
+* --------------------------------------------------
+* DOMAINE DEMO
+* --------------------------------------------------
+*/
+
+
+.roboto {
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+.vendor {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  color: #111111;
+}
+
+.product-title {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  line-height: 18px;
+  font-weight: 500;
+  color: #0A4874;
+}
+
+.product-price {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  gap: 8px;
+  display: flex;
+  color: #111111;
+}
+
+.product-price s {
+  color: #111111;
+}
+
+.product-price-on-sale {
+  color: #FF0000;
 }
