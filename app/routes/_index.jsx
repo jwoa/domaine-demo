@@ -52,9 +52,9 @@ export default function ProductPage() {
     : null;
 
   return (
-    <div className="product-details">
+    <div className="flex flex-col">
       <div 
-        className="product-image"
+        className="w-[315px] relative"
         onMouseEnter={() => setHoveredColor(true)}
         onMouseLeave={() => setHoveredColor(null)}
       >
@@ -63,36 +63,24 @@ export default function ProductPage() {
             data={{
               url: (hoveredColor ? hoverImage : currentImage).url,
               altText: (hoveredColor ? hoverImage : currentImage).altText,
-              width: 654,
-              height: 654
+              width: 275,
+              height: 301
             }}
             aspectRatio="1/1"
             sizes="(min-width: 45em) 50vw, 100vw"
+            className="rounded-[10px] border border-gray-300"
           />
         )}
       </div>
       <div className="product-info">
-        <h4 className="vendor">{product.vendor}</h4>
-        <h1 className="product-title">{product.title}</h1>
-        <div className="product-price">
-          {selectedVariant?.compareAtPrice ? (
-            <>
-              <s><Money data={selectedVariant.compareAtPrice} /></s>{' '}
-              <Money className="price-on-sale" data={selectedVariant.price} />
-            </>
-          ) : (
-            <Money data={selectedVariant?.price} />
-          )}
-        </div>
-
         {/* Color swatches */}
-        <div className="color-options">
+        <div className="flex gap-2.5 my-6">
           {colorValues.map((color) => {
             const variant = getVariantByColor(color.name);
             return (
               <button
                 key={color.name}
-                className={`color-swatch ${!variant?.availableForSale ? 'sold-out' : ''} ${selectedVariant?.title === color.name ? 'selected' : ''}`}
+                className={`color-swatch rounded-full w-[20px] h-[20px] ${!variant?.availableForSale ? 'sold-out' : ''} ${selectedVariant?.title === color.name ? 'selected' : ''}`}
                 style={{backgroundColor: color.swatch.color}}
                 disabled={!variant?.availableForSale}
                 onClick={() => variant && setSelectedVariant(variant)}
@@ -102,7 +90,18 @@ export default function ProductPage() {
           })}
         </div>
 
-        <div className="product-description">{product.description}</div>
+        <h4 className="text-sm">{product.vendor}</h4>
+        <h1 className="text-base my-6 leading-normal font-medium text-[#0A4874]">{product.title}</h1>
+        <div className="flex items-center space-x-2 text-sm">
+          {selectedVariant?.compareAtPrice ? (
+            <>
+              <s><Money data={selectedVariant.compareAtPrice} /></s>
+              <Money className="text-red-600" data={selectedVariant.price} />
+            </>
+          ) : (
+            <Money className="font-semibold" data={selectedVariant?.price} />
+          )}
+        </div>
       </div>
     </div>
   );
