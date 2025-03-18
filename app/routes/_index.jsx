@@ -71,12 +71,12 @@ export default function ProductPage() {
             data={{
               url: (hoveredColor ? hoverImage : currentImage).url,
               altText: (hoveredColor ? hoverImage : currentImage).altText,
-              width: 275,
-              height: 301
+              width: 600,
+              height: 600
             }}
             aspectRatio="1/1"
-            sizes="(min-width: 45em) 50vw, 100vw"
-            className="rounded-[10px] border border-gray-300"
+            sizes="(min-width: 768px) 315px, 100vw"
+            className="rounded-[10px] border border-gray-300 object-cover w-full h-full"
           />
         )}
       </div>
