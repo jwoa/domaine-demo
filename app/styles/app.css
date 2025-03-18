@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://use.typekit.net/xdw4jjr.css");
 @import "tailwindcss";
 
 :root {
@@ -9,6 +10,10 @@
   --header-height: 64px;
   --color-dark: #000;
   --color-light: #fff;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
 }
 
 /*
@@ -28,51 +33,12 @@
 * --------------------------------------------------
 */
 
-
-.roboto {
-  font-optical-sizing: auto;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
+.gothicFont {
+  font-family: "franklin-gothic-atf", sans-serif;
+font-weight: 500;
+font-style: normal;
 }
 
-.vendor {
-  font-family: "Roboto", sans-serif;
-  font-size: 14px;
-  line-height: 16px;
-  font-weight: 400;
-  color: #111111;
-}
-
-.product-title {
-  font-family: "Roboto", sans-serif;
-  font-size: 16px;
-  line-height: 18px;
-  font-weight: 500;
-  color: #0A4874;
-}
-
-.product-price {
-  font-family: "Roboto", sans-serif;
-  font-size: 14px;
-  line-height: 16px;
-  font-weight: 400;
-  gap: 8px;
-  display: flex;
-  color: #111111;
-}
-
-.product-price s {
-  color: #111111;
-}
-
-.product-price-on-sale {
-  color: #FF0000;
-}
-
-.price-on-sale {
-  color: #e31b1b;
-}
 
 /*
 * --------------------------------------------------

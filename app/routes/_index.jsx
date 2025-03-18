@@ -58,6 +58,14 @@ export default function ProductPage() {
         onMouseEnter={() => setHoveredColor(true)}
         onMouseLeave={() => setHoveredColor(null)}
       >
+
+        {/* Check if product is on sale, show badge if so */}
+        {selectedVariant?.compareAtPrice && (
+          <div className="absolute top-2 left-2 border border-red-600 text-red-600 text-base px-2 py-1 rounded-[25px] gothicFont font-medium">
+            On Sale!
+          </div>
+        )}
+
         {(hoveredColor ? hoverImage : currentImage) && (
           <Image
             data={{
@@ -74,7 +82,7 @@ export default function ProductPage() {
       </div>
       <div className="product-info">
         {/* Color swatches */}
-        <div className="flex gap-2.5 my-6">
+        <div className="flex gap-2.5 my-3">
           {colorValues.map((color) => {
             const variant = getVariantByColor(color.name);
             return (
