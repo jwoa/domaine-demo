@@ -566,3 +566,99 @@ button.reset:hover:not(:has(> *)) {
 .product-price-on-sale {
   color: #FF0000;
 }
+
+/*
+* --------------------------------------------------
+* Product Details Styles
+* --------------------------------------------------
+*/
+.product-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.product-image {
+  position: relative;
+}
+
+.product-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.vendor {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+
+.product-title {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.product-price {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+
+.price-on-sale {
+  color: #e31b1b;
+}
+
+/*
+* --------------------------------------------------
+* Color Swatch Styles
+* --------------------------------------------------
+*/
+.color-options {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.color-swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.color-swatch:hover {
+  transform: scale(1.1);
+}
+
+.color-swatch.selected {
+  border-color: #000;
+}
+
+.color-swatch.sold-out {
+  opacity: 0.5;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.color-swatch.sold-out::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -2px;
+  right: -2px;
+  height: 2px;
+  background: #000;
+  transform: rotate(-45deg);
+}

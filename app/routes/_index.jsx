@@ -1,5 +1,6 @@
 import {useLoaderData, Link} from '@remix-run/react';
 import {Image, Money} from '@shopify/hydrogen';
+import {useState} from 'react';
 
 /**
  * @type {MetaFunction}
@@ -26,15 +27,45 @@ export default function ProductPage() {
   
   if (!product) return <div>Product not found</div>;
 
-  const firstVariant = product.variants.nodes[0];
-  const firstImage = firstVariant?.image;
+  // Get color options from the product options
+  const colorOption = product.options.find(option => option.name === 'Color');
+  const colorValues = colorOption?.optionValues || [];
+
+  // Find the default variant (first available one)
+  const defaultVariant = product.variants.nodes.find(v => v.availableForSale) || product.variants.nodes[0];
+  
+  // State for selected variant and hover state
+  const [selectedVariant, setSelectedVariant] = useState(defaultVariant);
+  const [hoveredColor, setHoveredColor] = useState(null);
+
+  // Function to find variant by color
+  const getVariantByColor = (colorName) => {
+    return product.variants.nodes.find(
+      variant => variant.selectedOptions.find(opt => opt.name === 'Color')?.value === colorName
+    );
+  };
+
+  // Get the current image to display (hover image or selected variant image)
+  const currentImage = selectedVariant?.image;
+  const hoverImage = hoveredColor 
+    ? colorValues.find(c => c.name === selectedVariant.title)?.swatch?.image?.previewImage
+    : null;
 
   return (
     <div className="product-details">
-      <div className="product-image">
-        {firstImage && (
+      <div 
+        className="product-image"
+        onMouseEnter={() => setHoveredColor(true)}
+        onMouseLeave={() => setHoveredColor(null)}
+      >
+        {(hoveredColor ? hoverImage : currentImage) && (
           <Image
-            data={firstImage}
+            data={{
+              url: (hoveredColor ? hoverImage : currentImage).url,
+              altText: (hoveredColor ? hoverImage : currentImage).altText,
+              width: 654,
+              height: 654
+            }}
             aspectRatio="1/1"
             sizes="(min-width: 45em) 50vw, 100vw"
           />
@@ -44,15 +75,33 @@ export default function ProductPage() {
         <h4 className="vendor">{product.vendor}</h4>
         <h1 className="product-title">{product.title}</h1>
         <div className="product-price">
-          {firstVariant?.compareAtPrice ? (
+          {selectedVariant?.compareAtPrice ? (
             <>
-              <s><Money data={firstVariant.compareAtPrice} /></s>{' '}
-              <Money className="price-on-sale" data={firstVariant.price} />
+              <s><Money data={selectedVariant.compareAtPrice} /></s>{' '}
+              <Money className="price-on-sale" data={selectedVariant.price} />
             </>
           ) : (
-            <Money data={firstVariant?.price} />
+            <Money data={selectedVariant?.price} />
           )}
         </div>
+
+        {/* Color swatches */}
+        <div className="color-options">
+          {colorValues.map((color) => {
+            const variant = getVariantByColor(color.name);
+            return (
+              <button
+                key={color.name}
+                className={`color-swatch ${!variant?.availableForSale ? 'sold-out' : ''} ${selectedVariant?.title === color.name ? 'selected' : ''}`}
+                style={{backgroundColor: color.swatch.color}}
+                disabled={!variant?.availableForSale}
+                onClick={() => variant && setSelectedVariant(variant)}
+                title={`${color.name}${!variant?.availableForSale ? ' (Sold Out)' : ''}`}
+              />
+            );
+          })}
+        </div>
+
         <div className="product-description">{product.description}</div>
       </div>
     </div>
